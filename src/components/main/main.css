@@ -1,0 +1,11 @@
+
+.choose{
+    transition: all ease-in-out 1s;
+}
+
+.choose:hover{
+    background-color: crimson;
+    padding: 5px 20px;
+    border-radius: 25px;
+    color: #fff;
+}
