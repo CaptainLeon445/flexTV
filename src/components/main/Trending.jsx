@@ -132,7 +132,7 @@ function Trending() {
                                     alt={obj.title}
                                     className='md:w-40 w-24 md:h-56 h-36 border rounded-lg mb-2 object-cover'
                                 />
-                                <p className='pb-4 text-sm text-bold'>{obj.title}</p>
+                                {/* <p className='pb-4 text-sm text-bold'>{obj.title}</p> */}
                             </div>
                         )
                     })}

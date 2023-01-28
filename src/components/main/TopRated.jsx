@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import Placeholder from "../../assets/blank.png";
+import { Link } from "react-router-dom";
 
 function TopRated() {
     const [Data, setData] = useState([])
@@ -34,19 +35,21 @@ function TopRated() {
             <div className="list flex md:flex-row flex-col flex-wrap pt-12 md:justify-between px-2">
                 {Data.map((obj) => {
                     return (
-                        <div className="card flex flex-col md:gap-2 gap-4 md:w-56 mb-8 transition ease-in-out delay-75 hover:-translate-y-0 hover:scale-105 duration-1000">
-                            <LazyLoadImage src={obj.image}
-                                placeholdersrc={Placeholder}
-                                alt="Image Alt"
-                                className='border rounded-xl h-60 w-full object-cover'
-                            />
-                            {/* <img src={obj.image} alt="" className='border rounded-xl h-60 w-full object-cover' /> */}
-                            <h2 className='text-sm font-bold'>{obj.title}</h2>
-                            <div className="info flex flex-row  justify-between">
-                                <p className='text-sm'>Release Date: {obj.date}</p>
-                                <p className='text-sm font-semibold'>{obj.rating}</p>
+                        <Link to='details'>
+                            <div className="card flex flex-col md:gap-2 gap-4 md:w-56 mb-8 transition ease-in-out delay-75 hover:-translate-y-0 hover:scale-105 duration-1000 cursor-pointer">
+                                <LazyLoadImage src={obj.image}
+                                    placeholdersrc={Placeholder}
+                                    alt="Image Alt"
+                                    className='border rounded-xl h-60 w-full object-cover'
+                                />
+                                {/* <img src={obj.image} alt="" className='border rounded-xl h-60 w-full object-cover' /> */}
+                                <h2 className='text-sm font-bold'>{obj.title}</h2>
+                                <div className="info flex flex-row  justify-between">
+                                    <p className='text-sm'>Release Date: {obj.date}</p>
+                                    <p className='text-sm font-semibold'>{obj.rating}</p>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     )
                 })}
             </div>

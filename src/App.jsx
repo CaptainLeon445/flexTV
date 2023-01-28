@@ -1,16 +1,19 @@
-import Footer from "./components/footer/Footer"
-import Header from "./components/Header/Header"
-import Main from "./components/main/Main"
+// import Home from "./pages/Home"
+import { Routes, Route } from "react-router-dom";
+import Details from "./pages/Details"
+import React from "react";
+// const LazyAbout = React.lazy(() => import("./components/about"))
 
-
-
+const LazyHome= React.lazy(() => import("./pages/Home"))
 function App() {
     return (
-    <div className="h-full w-screen">
-      <Header />
-      <Main />
-      <Footer />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<LazyHome />} />
+        <Route path="details" element={<Details />}></Route>
+
+      </Routes>
+    </>
   )
 }
 
