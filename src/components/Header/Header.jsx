@@ -1,7 +1,6 @@
 import React from 'react'
 import Intro from './intro/Intro'
 import Topbar from './topbar/topbar'
-import "./header.scss"
 import Poster from "../../assets/poster.avif"
 function Header() {
     return (
