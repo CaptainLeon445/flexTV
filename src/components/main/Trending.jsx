@@ -111,9 +111,9 @@ function Trending() {
     return (
         <div className='container mx-auto pt-6 pb-6'>
             <div className="heading flex flex-col">
-                <h2 className='font-bold text-2xl mx-auto'>Trending</h2>
-                <div className="options md:w-2/4 w-full mt-4">
-                    <ul className='flex flex-row md:justify-evenly gap-4 place-items-center text-center'>
+                <h2 className='font-bold text-2xl text-left md:ml-2 ml-6'>Trending</h2>
+                <div className="md:w-1/4 mt-4">
+                    <ul className='flex flex-row md:justify-between justify-around gap-4 place-items-center text-center'>
                         <li className={Clicked ? 'cursor-pointer choose' : 'cursor-pointer'} onClick={handleClick}>Movies</li>
                         <li className={Clicked1 ? 'cursor-pointer choose' : 'cursor-pointer'} onClick={handleClick}>TV Shows</li>
                         <li className={Clicked2 ? 'cursor-pointer choose' : 'cursor-pointer'} onClick={handleClick}>Actors</li>
