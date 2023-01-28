@@ -25,15 +25,15 @@ function TopRated() {
     }, [])
     return (
         <div className=''>
-            <div className="heading flex flex-row justify-between">
+            <div className="heading flex flex-row justify-between px-2">
                 <h2 className='text-2xl font-semibold'>Top Rated</h2>
                 <h3 className='text-xl text-red-400 cursor-pointer'>View All</h3>
             </div>
-            <div className="list flex flex-row flex-wrap pt-12 justify-between">
+            <div className="list flex md:flex-row flex-col flex-wrap pt-12 md:justify-between px-2">
                 {Data.map((obj) => {
                     return (
-                        <div className="card flex flex-col gap-2 w-56 mb-8 transition ease-in-out delay-75 hover:-translate-y-0 hover:scale-105 duration-1000">
-                            <img src={obj.image} alt="" className='border rounded-xl h-32 object-cover' />
+                        <div className="card flex flex-col md:gap-2 gap-4 md:w-56 mb-8 transition ease-in-out delay-75 hover:-translate-y-0 hover:scale-105 duration-1000">
+                            <img src={obj.image} alt="" className='border rounded-xl h-60 w-full object-cover' />
                             <h2 className='text-sm font-bold'>{obj.title}</h2>
                             <div className="info flex flex-row  justify-between">
                                 <p className='text-sm'>Release Date: {obj.date}</p>

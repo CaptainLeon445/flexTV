@@ -33,9 +33,9 @@ function Trending() {
     return (
         <div className='container mx-auto pt-6 pb-6'>
             <div className="heading flex flex-col">
-                <h2 className='font-bold text-xl'>Trending</h2>
-                <div className="options w-1/4 mt-4">
-                    <ul className='flex flex-row justify-between text-center'>
+                <h2 className='font-bold text-2xl mx-auto'>Trending</h2>
+                <div className="options md:w-1/4 w-full mt-4">
+                    <ul className='flex flex-row md:justify-between gap-10 justify-center text-center'>
                         <li className='cursor-pointer choose'>Movies</li>
                         <li className='cursor-pointer point'>TV Shows</li>
                         <li className='cursor-pointer point'>Actors</li>
@@ -43,10 +43,10 @@ function Trending() {
                 </div>
             </div>
             <div className="list mt-6">
-                <div className="card flex flex-row flex-wrap justify-between">
+                <div className="card flex flex-row flex-wrap md:justify-between justify-center gap-2">
                     {Data.map((obj) => {
                         return (
-                            <img src={obj.image} alt="" className='w-40 h-56 border rounded-lg mb-4 object-cover  transition ease-in-out delay-75 hover:-translate-y-0 hover:scale-105 duration-1000' />
+                            <img src={obj.image} alt="" className='md:w-40 w-24 md:h-56 h-36 border rounded-lg mb-4 object-cover  transition ease-in-out delay-75 hover:-translate-y-0 hover:scale-105 duration-1000' />
                         )
                     })}
                 </div>
