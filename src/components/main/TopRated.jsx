@@ -36,7 +36,7 @@ function TopRated() {
                     return (
                         <div className="card flex flex-col md:gap-2 gap-4 md:w-56 mb-8 transition ease-in-out delay-75 hover:-translate-y-0 hover:scale-105 duration-1000">
                             <LazyLoadImage src={obj.image}
-                                PlaceholderSrc={Placeholder}
+                                placeholdersrc={Placeholder}
                                 alt="Image Alt"
                                 className='border rounded-xl h-60 w-full object-cover'
                             />
