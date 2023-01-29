@@ -9,7 +9,7 @@ function Topbar() {
                 </div>
                 <div className="right text-white flex md:flex-row flex-col">
                     <h2 className='pr-4'>Github</h2>
-                    <ul className='flex md:flex-row'>
+                    <ul className='flex md:flex-row flex-col'>
                         <li className='mr-4'>Home</li>
                         <li className='mr-4'>TV Shows</li>
                         <li className='mr-4'>Movies</li>
