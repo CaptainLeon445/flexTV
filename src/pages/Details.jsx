@@ -5,6 +5,8 @@ import Topbar from '../components/Header/topbar/topbar'
 import { useParams } from "react-router-dom"
 import { useEffect } from 'react'
 import axios from "axios";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import Placeholder from "../assets/blank.png";
 
 function Details() {
   const [Data, setData] = useState([])
@@ -85,7 +87,12 @@ function Details() {
         <div className="top flex md:flex-row flex-col h-full md:justify-between md:px-0 px-4 gap-8">
           <div className="left flex flex-col md:w-1/2 w-full">
             <div className='md:w-11/12 h-1/2 w-full md:h-[250px] h-[200px] justify-center'>
-            <img src={Data.image} alt="" className='h-full w-full object-fit border rounded-lg' />
+              {/* <img src={Data.image} alt="" className='h-full w-full object-fit border rounded-lg' /> */}
+              <LazyLoadImage src={Data.image}
+                placeholdersrc={Placeholder}
+                alt="Image Alt"
+                className='h-full w-full object-fit border rounded-lg'
+              />
             </div>
             <h2 className='pt-8 font-bold text-3xl'>{Data.title}</h2>
             <p className='pt-8 font-normal text-sm leading-relaxed'>{Data.description}</p>
@@ -163,8 +170,8 @@ function Details() {
             {
               Similar.map((obj) => {
                 return (
-                  <div className='md:24 w-28 h-48 flex flex-col pb-4'  key={obj.id}>
-                    <img src={obj.image} alt="" className='object-cover border rounded-lg' />
+                  <div className='md:24 w-28 h-48 flex flex-col pb-4' key={obj.id}>
+                    <LazyLoadImage src={obj.image} placeholdersrc={Placeholder} alt="" className='object-cover border rounded-lg' />
                     <h3 className='font-normal pt-2 text-sm'>{obj.title}</h3>
                   </div>
                 )
@@ -181,7 +188,7 @@ function Details() {
               Suggestion.map((obj) => {
                 return (
                   <div className='md:24 w-28 h-48 flex flex-col pb-4' key={obj.id}>
-                    <img src={obj.image} alt="" className='object-cover border rounded-lg' />
+                    <LazyLoadImage src={obj.image} placeholdersrc={Placeholder} alt="" className='object-cover border rounded-lg' />
                     <h3 className='font-normal pt-2 text-sm'>{obj.title}</h3>
                   </div>
                 )
