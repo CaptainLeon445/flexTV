@@ -146,14 +146,14 @@ function Details() {
             </div>
           </div>
         </div>
-        <div className="bottom flex flex-col mt-12 pt-8 pb-16 bg-red-100">
+        <div className="bottom flex flex-col mt-12 pt-8 h-full pb-12 bg-red-100">
 
           <h2 className='text-xl font-bold pb-8 text-center'>Related Videos</h2>
-          <div className='flex flex-row md:gap-6 gap-2 flex-wrap md:mx-6 mx-2'>
+          <div className='flex flex-row md:gap-6 gap-2 flex-wrap md:mx-6 justify-evenly'>
             {
               Similar.map((obj) => {
                 return (
-                  <div className='md:24 w-28 h-48 flex flex-col pb-4 mb-8' key={obj.id}>
+                  <div className='w-24 md:h-48 h-36 flex flex-col pb-4 mb-8' key={obj.id}>
                     <LazyLoadImage src={obj.image} placeholdersrc={Placeholder} alt="" className='object-cover border rounded-lg' />
                     <h3 className='font-normal pt-2 text-sm'>{obj.title}</h3>
                   </div>
@@ -166,7 +166,7 @@ function Details() {
         <div className="bottom flex flex-col mt-12 pt-8 h-full pb-12 bg-emerald-100">
 
           <h2 className='text-xl font-bold pb-8 text-center'>You may also like:</h2>
-          <div className='flex flex-row md:gap-6 gap-3 flex-wrap md:mx-6 justify-evenly'>
+          <div className='flex flex-row md:gap-6 gap-2 flex-wrap md:mx-6 justify-evenly'>
             {
               Suggestion.map((obj) => {
                 return (
