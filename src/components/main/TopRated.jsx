@@ -28,7 +28,7 @@ function TopRated() {
     }, [])
     return (
         <div className=''>
-            <div className="heading flex flex-row justify-between px-2">
+            <div className="heading flex flex-row gap-20 justify-around px-2">
                 <h2 className='text-2xl font-semibold'>Top Rated</h2>
                 <h3 className='text-xl text-red-400 cursor-pointer'>View All</h3>
             </div>
