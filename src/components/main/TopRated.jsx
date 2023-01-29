@@ -15,6 +15,7 @@ function TopRated() {
             .then((res) => {
                 const response = res.data.results.map((data) => {
                     return {
+                        id: data.id,
                         title: data.title,
                         image: `${img_path + data.backdrop_path}`,
                         date: data.release_date,
@@ -22,7 +23,6 @@ function TopRated() {
                     }
                 })
                 setData(response)
-                console.log(Data)
             })
             .catch((err) => { console.log(err) })
     }, [])
@@ -35,7 +35,7 @@ function TopRated() {
             <div className="list flex md:flex-row flex-col flex-wrap pt-12 md:justify-between px-2">
                 {Data.map((obj) => {
                     return (
-                        <Link to='details'>
+                        <Link to={`details/${obj.id}`}>
                             <div className="card flex flex-col md:gap-2 gap-4 md:w-56 mb-8 transition ease-in-out delay-75 hover:-translate-y-0 hover:scale-105 duration-1000 cursor-pointer">
                                 <LazyLoadImage src={obj.image}
                                     placeholdersrc={Placeholder}

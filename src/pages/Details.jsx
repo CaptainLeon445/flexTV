@@ -1,39 +1,119 @@
-import React from 'react'
-import Poster from "../assets/poster.avif"
+import React, { useState } from 'react'
+import Poster from "../assets/represent.png"
 import Footer from '../components/footer/Footer'
 import Topbar from '../components/Header/topbar/topbar'
+import { useParams } from "react-router-dom"
+import { useEffect } from 'react'
+import axios from "axios";
+
 function Details() {
+  const [Data, setData] = useState([])
+  const [Similar, setSimilar] = useState([])
+  const [Suggestion, setSuggestion] = useState([])
+  const params = useParams()
+  const id = params.id
+  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=75a2f69d31ae8a963d53a3e8b2a9943a&language=en-US`
+  const img_path = "https://image.tmdb.org/t/p/original"
+  const similar_movie = `https://api.themoviedb.org/3/movie/${id}/similar?api_key=75a2f69d31ae8a963d53a3e8b2a9943a&language=en-US`
+  const suggestion = `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=75a2f69d31ae8a963d53a3e8b2a9943a&language=en-US`
+
+  useEffect(() => {
+    axios.get(url)
+      .then((res) => {
+        const data_response = {
+          banner: `${img_path + res.data.backdrop_path}`,
+          title: res.data.original_title,
+          image: `${img_path + res.data.poster_path}`,
+          description: res.data.overview,
+          duration: res.data.runtime,
+          genre: res.data.genres,
+          lang: res.data.spoken_languages,
+        }
+        // })
+        setData(data_response)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
+  useEffect(() => {
+    axios.get(similar_movie)
+      .then((res) => {
+        const response = res.data.results.map((result) => {
+          return {
+            id: result.id,
+            banner: `${img_path + result.backdrop_path}`,
+            title: result.title,
+            image: `${img_path + result.poster_path}`,
+          }
+        })
+        setSimilar(response)
+
+
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, []);
+  useEffect(() => {
+    axios.get(suggestion)
+      .then((res) => {
+        const response = res.data.results.map((result) => {
+          return {
+            id: result.id,
+            banner: `${img_path + result.backdrop_path}`,
+            title: result.title,
+            image: `${img_path + result.poster_path}`,
+          }
+        })
+        setSuggestion(response)
+
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, []);
   return (
     <div className='w-full'>
       <div className='md:h-screen h-full relative'>
-        <img src={Poster} alt="" className='w-full h-3/4 object-cover brightness-50' />
+        <img src={Data.banner} alt="" className='w-full h-3/4 object-cover brightness-50' />
         <div className='container top-8 md:left-20 absolute'>
           <Topbar />
         </div>
       </div>
       <div className='container mx-auto pt-10 pb-10'>
-        <div className="top flex md:flex-row flex-col md:justify-between md:px-0 px-4 gap-8">
+        <div className="top flex md:flex-row flex-col h-full md:justify-between md:px-0 px-4 gap-8">
           <div className="left flex flex-col md:w-1/2 w-full">
-            <img src={Poster} alt="" className='md:w-11/12 w-full justify-center border rounded-lg object-cover' />
-            <h2 className='pt-8 font-bold text-3xl'>Movie Title</h2>
-            <p className='pt-8 font-normal text-sm leading-relaxed'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur at eos alias magnam ut accusantium.</p>
+            <div className='md:w-11/12 h-1/2 w-full md:h-[250px] h-[200px] justify-center'>
+            <img src={Data.image} alt="" className='h-full w-full object-fit border rounded-lg' />
+            </div>
+            <h2 className='pt-8 font-bold text-3xl'>{Data.title}</h2>
+            <p className='pt-8 font-normal text-sm leading-relaxed'>{Data.description}</p>
             <div className='pt-8 font-semibold text-sm'>
-              <p>Duration: <span className='font-normal text-sm'>100 mins</span></p>
+              <p>Duration: <span className='font-normal text-sm'>{Data.duration} mins</span></p>
               <p className='pt-2'>Release Date: 22/07/2022</p>
               <div className='flex flex-row pt-2 place-items-center'>
                 <p>Language:</p>
                 <ul className='flex flex-row gap-1 ml-2'>
-                  <li className='border border-lg bg-zinc-300 py-1 px-2'>English</li>
-                  <li className='border border-lg bg-zinc-300 py-1 px-2'>Spanish</li>
-                  <li className='border border-lg bg-zinc-300 py-1 px-2'>Turkish</li>
+                  {/* {
+                    Data.lang.map((obj) => {
+                      return (
+                        <li className='border border-lg bg-zinc-300 py-1 px-2'>{obj.name}</li>
+                      )
+                    })
+                  } */}
                 </ul>
               </div>
               <div className='flex flex-row pt-2 place-items-center'>
                 <p>Genre:</p>
                 <ul className='flex flex-row gap-1 ml-2'>
-                  <li className='border border-lg bg-zinc-300 py-1 px-2'>Play</li>
-                  <li className='border border-lg bg-zinc-300 py-1 px-2'>Poem</li>
-                  <li className='border border-lg bg-zinc-300 py-1 px-2'>Drama</li>
+                  {/* {
+                    Data.genre.map((obj) => {
+                      return (
+                        <li className='border border-lg bg-zinc-300 py-1 px-2'>{obj.name}</li>
+                      )
+                    })
+                  } */}
                 </ul>
               </div>
             </div>
@@ -80,37 +160,33 @@ function Details() {
 
           <h2 className='text-xl font-bold pb-8 text-center'>Related Videos</h2>
           <div className='flex flex-row md:gap-6 gap-2 flex-wrap md:mx-6 mx-2'>
-            <div className='flex flex-col pb-4'>
-              <img src={Poster} alt="" className='md:24 w-28 h-48 object-cover' />
-              <h3 className='font-normal pt-2 text-sm'>Title</h3>
-            </div>
-            <div className='flex flex-col'>
-              <img src={Poster} alt="" className='md:24 w-28 h-48 object-cover' />
-              <h3 className='font-normal pt-2 text-sm'>Title</h3>
-            </div>
-            <div className='flex flex-col'>
-              <img src={Poster} alt="" className='md:24 w-28 h-48 object-cover' />
-              <h3 className='font-normal pt-2 text-sm'>Title</h3>
-            </div>
-            <div className='flex flex-col'>
-              <img src={Poster} alt="" className='md:24 w-28 h-48 object-cover' />
-              <h3 className='font-normal pt-2 text-sm'>Title</h3>
-            </div><div className='flex flex-col'>
-              <img src={Poster} alt="" className='md:24 w-28 h-48 object-cover' />
-              <h3 className='font-normal pt-2 text-sm'>Title</h3>
-            </div>
-            <div className='flex flex-col'>
-              <img src={Poster} alt="" className='md:24 w-28 h-48 object-cover' />
-              <h3 className='font-normal pt-2 text-sm'>Title</h3>
-            </div>
-            <div className='flex flex-col'>
-              <img src={Poster} alt="" className='md:24 w-28 h-48 object-cover' />
-              <h3 className='font-normal pt-2 text-sm'>Title</h3>
-            </div>
-            <div className='flex flex-col'>
-              <img src={Poster} alt="" className='md:24 w-28 h-48 object-cover' />
-              <h3 className='font-normal pt-2 text-sm'>Title</h3>
-            </div>
+            {
+              Similar.map((obj) => {
+                return (
+                  <div className='md:24 w-28 h-48 flex flex-col pb-4'  key={obj.id}>
+                    <img src={obj.image} alt="" className='object-cover border rounded-lg' />
+                    <h3 className='font-normal pt-2 text-sm'>{obj.title}</h3>
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+
+        <div className="bottom flex flex-col mt-12 pt-8  pb-8 bg-emerald-100">
+
+          <h2 className='text-xl font-bold pb-8 text-center'>You may also like:</h2>
+          <div className='flex flex-row md:gap-6 gap-2 flex-wrap md:mx-6 mx-2'>
+            {
+              Suggestion.map((obj) => {
+                return (
+                  <div className='md:24 w-28 h-48 flex flex-col pb-4' key={obj.id}>
+                    <img src={obj.image} alt="" className='object-cover border rounded-lg' />
+                    <h3 className='font-normal pt-2 text-sm'>{obj.title}</h3>
+                  </div>
+                )
+              })
+            }
           </div>
         </div>
       </div>
