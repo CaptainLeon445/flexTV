@@ -163,7 +163,7 @@ function Details() {
           </div>
         </div>
 
-        <div className="bottom flex flex-col mt-12 pt-8  pb-8 bg-emerald-100">
+        <div className="bottom flex flex-col mt-12 pt-8 h-full pb-12 bg-emerald-100">
 
           <h2 className='text-xl font-bold pb-8 text-center'>You may also like:</h2>
           <div className='flex flex-row md:gap-6 gap-3 flex-wrap md:mx-6 justify-evenly'>
