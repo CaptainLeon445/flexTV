@@ -14,67 +14,50 @@ function Details() {
   const [Suggestion, setSuggestion] = useState([])
   const params = useParams()
   const id = params.id
-  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=75a2f69d31ae8a963d53a3e8b2a9943a&language=en-US`
   const img_path = "https://image.tmdb.org/t/p/original"
-  const similar_movie = `https://api.themoviedb.org/3/movie/${id}/similar?api_key=75a2f69d31ae8a963d53a3e8b2a9943a&language=en-US`
-  const suggestion = `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=75a2f69d31ae8a963d53a3e8b2a9943a&language=en-US`
+  const urls = [
+    `https://api.themoviedb.org/3/movie/${id}?api_key=75a2f69d31ae8a963d53a3e8b2a9943a&language=en-US`,
+    `https://api.themoviedb.org/3/movie/${id}/similar?api_key=75a2f69d31ae8a963d53a3e8b2a9943a&language=en-US`,
+    `https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=75a2f69d31ae8a963d53a3e8b2a9943a&language=en-US`
+  ]
 
   useEffect(() => {
-    axios.get(url)
-      .then((res) => {
-        const data_response = {
-          banner: `${img_path + res.data.backdrop_path}`,
-          title: res.data.original_title,
-          image: `${img_path + res.data.poster_path}`,
-          description: res.data.overview,
-          duration: res.data.runtime,
-          genre: res.data.genres,
-          lang: res.data.spoken_languages,
-        }
-        // })
-        setData(data_response)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, [])
-  useEffect(() => {
-    axios.get(similar_movie)
-      .then((res) => {
-        const response = res.data.results.map((result) => {
-          return {
-            id: result.id,
-            banner: `${img_path + result.backdrop_path}`,
-            title: result.title,
-            image: `${img_path + result.poster_path}`,
+    axios.all(urls.map((url) => axios.get(url)))
+      .then(
+        axios.spread((res, res1, res2) => {
+          const data_response = {
+            banner: `${img_path + res.data.backdrop_path}`,
+            title: res.data.original_title,
+            image: `${img_path + res.data.poster_path}`,
+            description: res.data.overview,
+            duration: res.data.runtime,
+            genre: res.data.genres,
+            lang: res.data.spoken_languages,
           }
+          const response = res1.data.results.map((result) => {
+            return {
+              id: result.id,
+              banner: `${img_path + result.backdrop_path}`,
+              title: result.title,
+              image: `${img_path + result.poster_path}`,
+            }
+          })
+          const resp = res2.data.results.map((result) => {
+            return {
+              id: result.id,
+              banner: `${img_path + result.backdrop_path}`,
+              title: result.title,
+              image: `${img_path + result.poster_path}`,
+            }
+          })
+
+          setData(data_response)
+          setSimilar(response)
+          setSuggestion(resp)
         })
-        setSimilar(response)
-
-
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+      )
   }, []);
-  useEffect(() => {
-    axios.get(suggestion)
-      .then((res) => {
-        const response = res.data.results.map((result) => {
-          return {
-            id: result.id,
-            banner: `${img_path + result.backdrop_path}`,
-            title: result.title,
-            image: `${img_path + result.poster_path}`,
-          }
-        })
-        setSuggestion(response)
 
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }, []);
   return (
     <div className='w-full'>
       <div className='md:h-screen h-full relative'>
@@ -163,14 +146,14 @@ function Details() {
             </div>
           </div>
         </div>
-        <div className="bottom flex flex-col mt-12 pt-8 pb-8 bg-red-100">
+        <div className="bottom flex flex-col mt-12 pt-8 pb-16 bg-red-100">
 
           <h2 className='text-xl font-bold pb-8 text-center'>Related Videos</h2>
           <div className='flex flex-row md:gap-6 gap-2 flex-wrap md:mx-6 mx-2'>
             {
               Similar.map((obj) => {
                 return (
-                  <div className='md:24 w-28 h-48 flex flex-col pb-4' key={obj.id}>
+                  <div className='md:24 w-28 h-48 flex flex-col pb-4 mb-8' key={obj.id}>
                     <LazyLoadImage src={obj.image} placeholdersrc={Placeholder} alt="" className='object-cover border rounded-lg' />
                     <h3 className='font-normal pt-2 text-sm'>{obj.title}</h3>
                   </div>
@@ -187,7 +170,7 @@ function Details() {
             {
               Suggestion.map((obj) => {
                 return (
-                  <div className='md:24 w-28 h-48 flex flex-col pb-4' key={obj.id}>
+                  <div className='md:24 w-28 h-48 flex flex-col pb-4 mb-8' key={obj.id}>
                     <LazyLoadImage src={obj.image} placeholdersrc={Placeholder} alt="" className='object-cover border rounded-lg' />
                     <h3 className='font-normal pt-2 text-sm'>{obj.title}</h3>
                   </div>
